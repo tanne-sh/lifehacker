@@ -6,7 +6,7 @@ body {
   background: #e5e5e5;
 }
 .header {
-  background: #fa8c16;
+  background: #ACCA5B;
   padding-top: 16px;
   padding-bottom: 16px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
@@ -194,7 +194,7 @@ body {
   background-color: #fafafa;
   border: 1px solid #e8e8e8;
   padding: 15px 25px;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
 }
@@ -219,6 +219,7 @@ body {
   fill: #000;
 }
 .sidebar-nav {
+  display: none;
   background-color: #fff;
 }
 .sidebar-menu {
@@ -272,7 +273,7 @@ body {
   fill: #ffc53d;
 }
 .button-new-post {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
