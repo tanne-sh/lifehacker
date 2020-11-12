@@ -17,9 +17,12 @@ const emailInput = document.querySelector('.login-email');
 const passwordInput = document.querySelector('.login-pasword');
 const loginSignup = document.querySelector('.login-signup');
 
+const userElem = document.querySelector('.user');
+const userNameElem = document.querySelector('.user-name');
+
 const listUsers = [
   {
-    email: 'PiedPiper@gmail.comPiedPiper@gmail.com',
+    email: 'PiedPiper@gmail.com',
     password:'zxc',
     displayName: 'Pied Piper'
   },
@@ -32,16 +35,24 @@ const listUsers = [
 
 const setUsers = {
   user: null,
-  logIn(email, password) {
-       
+  logIn(email, password, handler) {
+     const user = this.getUser(email);
+     if(user && user.password === password){
+       this.authorizedUser(user);
+       handler();
+     } else{
+       alert('Пользователь с такими данными не найден!')
+     }  
   },
   logOut() {
     console.log('выход')
   },
-  signUp(email, password) {
+  signUp(email, password, handler) {
     if(!this.getUser(email)){
-      listUsers.push({email, password, displayName: email})
-      console.log(listUsers);
+      const user = {email, password, displayName: email};
+      listUsers.push(user);
+      this.authorizedUser(user)
+      handler();
     } else{
       alert('Пользователь с таким именем уже зарегистрирован!')
     }
@@ -69,6 +80,23 @@ const setUsers = {
     */
   getUser(email) {
   return listUsers.find(item => item.email === email) 
+  },
+  authorizedUser(user){
+    this.user = user;
+  }
+};
+
+const toggleAuthDom = () => {
+  const user = setUsers.user;
+  console.log('user: ', user);
+  
+  if(user) {
+    loginElem.style.display = 'none';
+    userElem.style.display = '';
+    userNameElem.textContent = user.displayName;
+  } else {
+    loginElem.style.display = '';
+    userElem.style.display = 'none';
   }
 };
 /*
@@ -81,14 +109,13 @@ loginForm.addEventListener('submit', event => {
   setUsers.logIn(emailInput.value, passwordInput.value);
 });
 */
-
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
 
   const emailValue = emailInput.value;
   const passwordValue = passwordInput.value;
 
-  setUsers.logIn(emailValue, passwordValue);
+  setUsers.logIn(emailValue, passwordValue, toggleAuthDom);
 });
 
 loginSignup.addEventListener('click', event => {
@@ -97,5 +124,7 @@ loginSignup.addEventListener('click', event => {
   const emailValue = emailInput.value;
   const passwordValue = passwordInput.value;
 
-  setUsers.signUp(emailValue, passwordValue);
+  setUsers.signUp(emailValue, passwordValue, toggleAuthDom);
 });
+
+toggleAuthDom();
