@@ -32,23 +32,69 @@ const listUsers = [
 
 const setUsers = {
   user: null,
-  logIn() {
-    console.log('вход')    
+  logIn(email, password) {
+       
   },
   logOut() {
     console.log('выход')
   },
-  signUp() {
-    console.log('регистрация')    
+  signUp(email, password) {
+    if(!this.getUser(email)){
+      listUsers.push({email, password, displayName: email})
+    } else{
+      alert('Пользователь с таким именем уже зарегистрирован!')
+    }
+  },
+
+   /* Простой способ получить email нового пользователя
+
+    let user= null;
+    for(let i = 0; i < listUsers.length; i++) {
+      if(listUsers[i].email === email){
+        user = listUsers[i];
+        break;
+      }
+    }
+    return user
+    
+    Ниже пишу лучший код, чтоб получить email нового пользователя
+
+    getUser(email) {
+  return listUsers.find((item) => {
+    return item.email === email
+  }) 
+  }
+  и оптимальная сокращенная запись такая
+    */
+  getUser(email) {
+  return listUsers.find(item => item.email === email) 
   }
 };
+/*
+Можно так записать. Означает тоже самое,что и запись ниже чезез переменные 
+const emailValue 
+const passwordValue
 
 loginForm.addEventListener('submit', event => {
   event.preventDefault();
-  setUsers.logIn(emailInput.value, passwordInput);
+  setUsers.logIn(emailInput.value, passwordInput.value);
+});
+*/
+
+loginForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  const emailValue = emailInput.value;
+  const passwordValue = passwordInput.value;
+
+  setUsers.logIn(emailValue, passwordValue);
 });
 
 loginSignup.addEventListener('click', event => {
   event.preventDefault();
-  setUsers.signUp();
+
+  const emailValue = emailInput.value;
+  const passwordValue = passwordInput.value;
+
+  setUsers.signUp(emailValue, passwordValue);
 });
