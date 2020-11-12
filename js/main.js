@@ -41,6 +41,7 @@ const setUsers = {
   signUp(email, password) {
     if(!this.getUser(email)){
       listUsers.push({email, password, displayName: email})
+      console.log(listUsers);
     } else{
       alert('Пользователь с таким именем уже зарегистрирован!')
     }
